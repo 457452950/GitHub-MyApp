@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="MyService"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\..\usr\local\;CMake Files\..\..\..\..\..\..\usr\local\lib\;CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\;CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\Boost-1.76.0\;CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\boost_headers-1.76.0\;CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\boost_thread-1.76.0\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/wlb/Desktop/C++/MyApp/MyService"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/wlb/Desktop/C++/MyApp/MyService"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/wlb/Desktop/C++/MyApp/MyService"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="MyService">
+				<Option output="/home/wlb/Desktop/C++/MyApp/MyService/MyService" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/wlb/Desktop/C++/MyApp/MyService"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DBOOST_ALL_NO_LIB"/>
+					<Add option="-DBOOST_THREAD_DYN_LINK"/>
+					<Add directory="/home/wlb/Desktop/C++/MyApp/MyService/$(Boost_include_dir)"/>
+					<Add directory="/home/wlb/Desktop/C++/MyApp/MyService/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 MyService"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="MyService/fast">
+				<Option output="/home/wlb/Desktop/C++/MyApp/MyService/MyService" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/wlb/Desktop/C++/MyApp/MyService"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DBOOST_ALL_NO_LIB"/>
+					<Add option="-DBOOST_THREAD_DYN_LINK"/>
+					<Add directory="/home/wlb/Desktop/C++/MyApp/MyService/$(Boost_include_dir)"/>
+					<Add directory="/home/wlb/Desktop/C++/MyApp/MyService/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 MyService/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/wlb/Desktop/C++/MyApp/MyService/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/src/BaseConnection.cpp">
+			<Option target="MyService"/>
+		</Unit>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/src/BaseConnection.h">
+			<Option target="MyService"/>
+		</Unit>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/src/BaseServer.cpp">
+			<Option target="MyService"/>
+		</Unit>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/src/BaseServer.h">
+			<Option target="MyService"/>
+		</Unit>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/src/Config.cpp">
+			<Option target="MyService"/>
+		</Unit>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/src/Config.h">
+			<Option target="MyService"/>
+		</Unit>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/src/JsonFileReader.cpp">
+			<Option target="MyService"/>
+		</Unit>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/src/JsonFileReader.h">
+			<Option target="MyService"/>
+		</Unit>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/src/main.cpp">
+			<Option target="MyService"/>
+		</Unit>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/../../../../../../usr/local/lib/cmake/BoostDetectToolset-1.76.0.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\"/>
+		</Unit>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/../../../../../../usr/local/lib/cmake/Boost-1.76.0/BoostConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\Boost-1.76.0\"/>
+		</Unit>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/../../../../../../usr/local/lib/cmake/Boost-1.76.0/BoostConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\Boost-1.76.0\"/>
+		</Unit>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/../../../../../../usr/local/lib/cmake/boost_headers-1.76.0/boost_headers-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\boost_headers-1.76.0\"/>
+		</Unit>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/../../../../../../usr/local/lib/cmake/boost_headers-1.76.0/boost_headers-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\boost_headers-1.76.0\"/>
+		</Unit>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/../../../../../../usr/local/lib/cmake/boost_thread-1.76.0/boost_thread-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\boost_thread-1.76.0\"/>
+		</Unit>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/../../../../../../usr/local/lib/cmake/boost_thread-1.76.0/boost_thread-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\boost_thread-1.76.0\"/>
+		</Unit>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/../../../../../../usr/local/lib/cmake/boost_thread-1.76.0/libboost_thread-variant-shared.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\boost_thread-1.76.0\"/>
+		</Unit>
+		<Unit filename="/home/wlb/Desktop/C++/MyApp/MyService/../../../../../../usr/local/lib/cmake/boost_thread-1.76.0/libboost_thread-variant-static.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\usr\local\lib\cmake\boost_thread-1.76.0\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

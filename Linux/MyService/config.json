@@ -1,0 +1,13 @@
+{
+  "frontPoint": "192.168.10.14",
+  "frontPort": 4001,
+  "endPoint": "127.0.0.1",
+  "endPort": 4000,
+  "redisServerPoint": "127.0.0.1",
+  "redisPort": 6379,
+  "maxBufSize": 16
+}
+
+
+
+
