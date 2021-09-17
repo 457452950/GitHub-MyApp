@@ -1,5 +1,6 @@
 #include "Config.h"
 #include <fstream>
+#include <Logger.h>
 
 namespace wlb
 {
@@ -23,6 +24,7 @@ Config* Config::getInstance()
 void Config::readFile(std::string fileName)
 {
 	s_strFileName = fileName;
+    LOG(INFO) << "file name :" << s_strFileName;
 	s_Config = new Config();
 }
 
@@ -30,10 +32,11 @@ std::string Config::getEndPointAddr()
 {
 	if (!m_reader.HasMember("endPoint") || !m_reader["endPoint"].IsString())
 	{
-		std::cout << "endPoint illegal" << "\n";
+		LOG(ERROR) << "endPoint illegal";
         return "";
 	}
-
+    
+    LOG(INFO) << "endPoint : " << m_reader["endPoint"].GetString();
 	return m_reader["endPoint"].GetString();
 }
 
