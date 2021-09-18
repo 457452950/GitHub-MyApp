@@ -1,4 +1,5 @@
 #include "JsonFileReader.h"
+#include "Logger.h"
 
 namespace wlb
 {
@@ -8,7 +9,7 @@ namespace wlb
 		std::ifstream ifile(fileName);
 		if (!ifile.is_open())
 		{
-			std::cout << "[JsonFileReader::JsonFileReader]!ifile.is_open():" << std::endl;
+			LOG(ERROR) << "[JsonFileReader::JsonFileReader]!ifile.is_open():";
 			exit(-1);
 		}
 		rapidjson::IStreamWrapper iSW(ifile);
@@ -16,12 +17,12 @@ namespace wlb
 		m_docData.ParseStream(iSW);
 		if (m_docData.HasParseError())
 		{
-			std::cout << "[JsonFileReader::JsonFileReader]HasParseError:" << m_docData.GetParseError() << std::endl;
+			LOG(ERROR) << "[JsonFileReader::JsonFileReader]HasParseError:" << m_docData.GetParseError();
 		}
-		
+
 		if (!m_docData.IsObject())
 		{
-			std::cout << "[JsonFileReader::JsonFileReader]IsObject:flase\n" ;
+			LOG(ERROR) << "[JsonFileReader::JsonFileReader]IsObject:flase";
 		}
 
 	}
@@ -32,7 +33,7 @@ namespace wlb
 
 
 
- 
+
 
 
 }

@@ -3,7 +3,7 @@
 //
 
 #include "Logger.h"
-
+#include <sys/time.h>
 
 //检查文件(所有类型,包括目录和文件)是否存在
 //返回1:存在 0:不存在
@@ -15,84 +15,106 @@ int IsFileExist(const char* path)
 namespace wlb
 {
 
-Logger* Logger::s_Instance = new Logger;
+    Logger* Logger::s_Instance = new Logger;
 
-Logger *Logger::getInstance()
-{
-    return s_Instance;
-}
-
-Logger::Logger()
-{
-    initFilePath();
-}
-
-Logger::~Logger()
-{
-    if (m_oStream.is_open())
-        m_oStream.close();
-}
-
-void Logger::initFilePath()
-{
-    if (m_oStream.is_open())
+    Logger* Logger::getInstance()
     {
-        m_oStream.close();
+        return s_Instance;
     }
-    
-    char name[256];
-    snprintf(name, 256,
-             "log/%d.log",
-             getpid()
-             );
-    
-    if (!IsFileExist("log"))
+
+    Logger::Logger()
     {
-        mkdir("log", 477);
+        initFilePath();
     }
-    m_oStream.open(name, std::ios::out);
-}
 
-LogHelper_ptr Logger::Write(const char*   level,
-                            const char*   file,
-                            int           lineNo,
-                            const char*   date,
-                            const char*   _time,
-                            const char*   _func)
-{
-    m_mMutex.lock();
-    
-    char head[256];
-    snprintf(head, 256,
-             "\n++ %s %s %s :: %d \n|| %s: %s : ",
-             date,
-             _time,
-             file,
-             lineNo,
-             level,
-             _func);
-    
-    m_oStream << head;
-    return std::make_shared<LogHelper>(this);
-}
-
-void Logger::commit()
-{
-    m_oStream << "\n\n";
-    
-    m_oStream.flush();
-    
-    if ((++m_iTimes %= m_iCheckTimes) == 0)
+    Logger::~Logger()
     {
-        if (getFileSize() >= m_maxFileSize)
-            initFilePath();
+        if (m_oStream.is_open())
+            m_oStream.close();
     }
-    
-    
-    m_mMutex.unlock();
+
+    void Logger::initFilePath()
+    {
+        if (m_oStream.is_open())
+        {
+            m_oStream.close();
+        }
+
+        // get data and time 
+        time_t _t = time(NULL);
+        auto _time = localtime(&_t);
+
+        char name[256];
+        snprintf(name, 256,
+                 "log/%02d%02d%02d.%d.log",
+                 _time->tm_mday,
+                 _time->tm_hour,
+                 _time->tm_min,
+                 getpid());
+
+        if (!IsFileExist("log"))
+        {
+            mkdir("log", 477);
+        }
+        m_oStream.open(name, std::ios::out);
+    }
+
+    LogHelper_ptr Logger::Write(const char* level,
+                                const char* file,
+                                int lineNo,
+                                const char* date,
+                                const char*,
+                                const char* _func)
+    {
+        m_mMutex.lock();
+
+        char head[256];
+
+        // get ms
+        timeval curTime;
+        gettimeofday(&curTime, NULL);
+
+        // get data and time 
+        time_t _t = time(NULL);
+        auto _time = localtime(&_t);
+
+        char _dataVal[128];
+        snprintf(_dataVal, 128, " %d-%d-%d %02d:%02d:%02d.%03ld %03ld ",
+                _time->tm_year + 1900,
+                _time->tm_mon + 1,
+                _time->tm_mday,
+                _time->tm_hour,
+                _time->tm_min,
+                _time->tm_sec,
+                curTime.tv_usec / 1000,
+                curTime.tv_usec % 1000);
+
+        // get head
+        snprintf(head, 256,
+                 "\n++ %s %s :: %d \n|| %s: %s : ",
+                 _dataVal,
+                 file,
+                 lineNo,
+                 level,
+                 _func);
+
+        m_oStream << head;
+        return std::make_shared<LogHelper>(this);
+    }
+
+    void Logger::commit()
+    {
+        m_oStream << "\n\n";
+
+        m_oStream.flush();
+
+        if ((++m_iTimes %= m_iCheckTimes) == 0)
+        {
+            if (getFileSize() >= m_maxFileSize)
+                initFilePath();
+        }
+
+        m_mMutex.unlock();
+    }
+
 }
-
-
-}
-
-
