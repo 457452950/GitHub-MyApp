@@ -18,6 +18,7 @@ namespace wlb
 
     class BaseServer
     {
+    protected:
         using BoostTCP = boost::asio::ip::tcp;
 
         using acceptor_type = BoostTCP::acceptor;
@@ -51,16 +52,18 @@ namespace wlb
 
         void            TimerHandle(boost::system::error_code ec);
         void            AcceptHandle(boost::system::error_code ec, Connection_ptr conn);
-        void            RecvHandle(boost::system::error_code ec, Connection_ptr conn);
+        void            RecvHandle(boost::system::error_code ec, int recvSize, Connection_ptr conn);
         void            SendHandle(boost::system::error_code ec, Connection_ptr conn);
 
         bool            ErrorHandle(boost::system::error_code ec, Connection_ptr conn);
+        
+        void            Disconnected(Connection_ptr conn);
 
     protected:
-        virtual void    onTime();
-        virtual void    onMessage(Connection_ptr conn, std::string Doc);
-        virtual void    onConnected(Connection_ptr conn);
-        virtual void    onDisconnected(Connection_ptr conn);
+        virtual void    onTime() = 0;
+        virtual void    onMessage(Connection_ptr conn, std::string Doc) = 0;
+        virtual void    onConnected(Connection_ptr conn) = 0;
+        virtual void    onDisconnected(Connection_ptr conn) = 0;
 
 
     protected:
@@ -71,7 +74,7 @@ namespace wlb
 
         static const int                        s_secPerMil{ 1 };
         static const std::chrono::microseconds  s_baseTick;
-        std::atomic_int                         m_iTick;
+        int                                     m_iTick;
 
     private:
 

@@ -14,32 +14,39 @@ namespace wlb
 {
 
 
-class Config
-{
+	class Config
+	{
+	public:
+		inline std::string 	getEndPointAddr() { return _EndPointIP; } 
+		inline int         	getEndPointPort() { return _EndPointPort; }
+		inline std::string 	getFrontPointAddr(){ return _FrontPointIP; }
+		inline int         	getFrontPointPort() { return _FrontPointPort; }
+		inline std::string 	getRedisPointAddr() { return _RedisIP; }
+		inline int         	getRedisPort() { return _RedisPort; }
+		inline int         	getMaxBufferSize() { return _MaxBuffSize; }
+	private:
+		std::string		_EndPointIP;
+		int 			_EndPointPort;
+		std::string		_FrontPointIP;
+		int 			_FrontPointPort;
+		std::string		_RedisIP;
+		int 			_RedisPort;
+		int 			_MaxBuffSize;
 
-public:
-	~Config();
+		JsonFileReader m_reader;
 
-	static Config* getInstance();
-	static void readFile(std::string fileName);
+		// Singleton 
+	public:
+		static Config* 		getInstance();
+		static void 		readFile(std::string fileName);
+		~Config();
+	private:
+		Config();
+		void 				load();
 
-	std::string getEndPointAddr();
-	int         getEndPointPort();
-	std::string getFrontPointAddr();
-	int         getFrontPointPort();
-	std::string getRedisPointAddr();
-	int         getRedisPort();
-    int         getMaxBufferSize();
-private:
-	Config();
-
- 
-
-	JsonFileReader m_reader;
-
-	static std::string s_strFileName;
-	static Config* s_Config;
-};
+		static std::string 	s_strFileName;
+		static Config* 		s_Config;
+	};
 
 
 }

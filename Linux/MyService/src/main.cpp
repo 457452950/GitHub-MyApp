@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 #include "Logger.h"
 #include "Config.h"
-#include "BaseServer.h"
+#include "Server.h"
 
 using namespace std;
 using namespace wlb;
@@ -21,9 +21,9 @@ int main(int argc, char** argv)
 	// LOG(INFO) << "FrontPointAddr : " << Conf->getFrontPointAddr()
 	// 	<< " FrontPointPort : " << Conf->getFrontPointPort();
 
-	BaseServer s(Conf->getFrontPointPort());
+	BaseServer* s = new Server(Conf->getFrontPointPort());
 
-	s.run();
+	s->run();
 
 
 	return 0;

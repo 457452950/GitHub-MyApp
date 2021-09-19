@@ -26,91 +26,79 @@ namespace wlb
 		s_strFileName = fileName;
 		LOG(INFO) << "file name :" << s_strFileName;
 		s_Config = new Config();
+		s_Config->load();
 	}
 
-	std::string Config::getEndPointAddr()
+	void Config::load()
 	{
 		if (!m_reader.HasMember("endPoint") || !m_reader["endPoint"].IsString())
 		{
 			LOG(ERROR) << "endPoint illegal";
-			return "";
+			return;
 		}
 
 		LOG(INFO) << "endPoint : " << m_reader["endPoint"].GetString();
-		return m_reader["endPoint"].GetString();
-	}
+		_EndPointIP = m_reader["endPoint"].GetString();
 
-	int Config::getEndPointPort()
-	{
+
 		if (!m_reader.HasMember("endPort") || !m_reader["endPort"].IsInt())
 		{
 			LOG(ERROR) << "endPort illegal";
-			return 0;
+			return;
 		}
 
 		LOG(INFO) << "endPort : " << m_reader["endPort"].GetInt();
-		return m_reader["endPort"].GetInt();
-	}
+		_EndPointPort = m_reader["endPort"].GetInt();
 
-	std::string Config::getFrontPointAddr()
-	{
+
 		if (!m_reader.HasMember("frontPoint") || !m_reader["frontPoint"].IsString())
 		{
 			LOG(ERROR) << "frontPoint illegal";
-			return "";
+			return;
 		}
 
 		LOG(INFO) << "frontPoint : " << m_reader["frontPoint"].GetString();
-		return m_reader["frontPoint"].GetString();
-	}
+		_FrontPointIP = m_reader["frontPoint"].GetString();
 
-	int Config::getFrontPointPort()
-	{
+
 		if (!m_reader.HasMember("frontPort") || !m_reader["frontPort"].IsInt())
 		{
 			LOG(ERROR) << "frontPort illegal";
-			return 0;
+			return;
 		}
 
 		LOG(INFO) << "frontPort : " << m_reader["frontPort"].GetInt();
-		return m_reader["frontPort"].GetInt();
-	}
+		_FrontPointPort = m_reader["frontPort"].GetInt();
 
-	std::string Config::getRedisPointAddr()
-	{
+
 		if (!m_reader.HasMember("redisServerPoint") || !m_reader["redisServerPoint"].IsString())
 		{
 			LOG(ERROR) << "redisServerPoint illegal";
-			return "";
+			return;
 		}
 
 		LOG(INFO) << "redisServerPoint : " << m_reader["redisServerPoint"].GetString();
-		return m_reader["redisServerPoint"].GetString();
-	}
+		_RedisIP = m_reader["redisServerPoint"].GetString();
 
-	int Config::getRedisPort()
-	{
 		if (!m_reader.HasMember("redisPort") || !m_reader["redisPort"].IsInt())
 		{
 			LOG(ERROR) << "redisPort illegal";
-			return 0;
+			return;
 		}
 
 		LOG(INFO) << "redisPort : " << m_reader["redisPort"].GetInt();
-		return m_reader["redisPort"].GetInt();
-	}
+		_RedisPort = m_reader["redisPort"].GetInt();
 
-	int Config::getMaxBufferSize()
-	{
+
 		if (!m_reader.HasMember("maxBufSize") || !m_reader["maxBufSize"].IsInt())
 		{
 			LOG(ERROR) << "maxBufSize illegal";
-			return 16;
+			_MaxBuffSize = 16;
+			return;
 		}
 
 		LOG(INFO) << "maxBufSize : " << m_reader["maxBufSize"].GetInt();
-		return m_reader["maxBufSize"].GetInt();
+		_MaxBuffSize = m_reader["maxBufSize"].GetInt();
 	}
-
 
 }

@@ -91,7 +91,7 @@ namespace wlb
 
         // get head
         snprintf(head, 256,
-                 "\n++ %s %s :: %d \n|| %s: %s : ",
+                 "\n++ %s %s :: %d \n|| %s: [%s] : ",
                  _dataVal,
                  file,
                  lineNo,

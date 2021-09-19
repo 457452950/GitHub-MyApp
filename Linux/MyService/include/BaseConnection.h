@@ -8,7 +8,7 @@
 #include <memory>
 #include <vector>
 #include "boost/asio.hpp"
-#include "Config.h"
+#include "src/Config.h"
 
 namespace wlb{
 

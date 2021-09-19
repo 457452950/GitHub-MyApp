@@ -15,8 +15,8 @@ include_directories($(Boost_include_dir))
 include_directories(include)
 
 
-add_executable(MyService src/main.cpp src/BaseServer.cpp src/BaseServer.h src/Config.cpp src/Config.h
-        include/JsonFileReader.cpp include/JsonFileReader.h src/BaseConnection.cpp src/BaseConnection.h include/Logger.cpp include/Logger.h)
+add_executable(MyService src/main.cpp include/BaseServer.cpp include/BaseServer.h src/Config.cpp src/Config.h
+        include/JsonFileReader.cpp include/JsonFileReader.h include/BaseConnection.cpp include/BaseConnection.h include/Logger.cpp include/Logger.h src/Server.cpp src/Server.h)
 
 
 link_directories($(Boost_library_dir))

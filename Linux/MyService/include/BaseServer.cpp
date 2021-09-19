@@ -6,6 +6,7 @@
 #include <iostream>
 #include <chrono>
 #include "Logger.h"
+#include <streambuf>
 
 namespace wlb
 {
@@ -68,11 +69,10 @@ namespace wlb
         {
             LOG(ERROR) << "error value : " << ec.value() << " error MSG : " << ec.message();
         }
-        ++m_iTick;
-        int checkTime = 1 * s_secPerMil;
-        if ((m_iTick % checkTime) == 0)
+        // ++m_iTick;
+        int checkTime = 40 * s_secPerMil;       // 40s timer
+        if ((++m_iTick %= checkTime) == 0)
         {
-            m_iTick = 0;
             onTime();
         }
     }
@@ -81,33 +81,34 @@ namespace wlb
     {
         if (ec)
         {
-            LOG(ERROR) << "[BaseServer::AcceptHandle] : " << ec.message();
+            LOG(ERROR) << "error value : " << ec.value() << " error MSG : " << ec.message();
         }
 
         accept();
+        m_vecConns.push_back(conn);
+
         onConnected(conn);
 
-        conn->sock->async_receive(boost::asio::buffer(conn->pBuff), boost::bind(
+        conn->sock->async_read_some(boost::asio::buffer(conn->pBuff), boost::bind(
             &BaseServer::RecvHandle,
             this,
             boost::asio::placeholders::error,
+            boost::asio::placeholders::bytes_transferred,
             conn));
-
-        m_vecConns.push_back(conn);
     }
 
-    void BaseServer::RecvHandle(boost::system::error_code ec, Connection_ptr conn)
+    void BaseServer::RecvHandle(boost::system::error_code ec, int recvSize, Connection_ptr conn)
     {
         if (ec)
         {
             if (ErrorHandle(ec, conn)) {
-                onDisconnected(conn);
+                Disconnected(conn);
                 return;
             }
         }
 
         std::string strBuf;
-        strBuf.assign(conn->pBuff.begin(), conn->pBuff.end());
+        strBuf.assign(conn->pBuff.begin(), conn->pBuff.begin() + recvSize);
         onMessage(conn, strBuf);
 
         send(conn, strBuf);
@@ -118,6 +119,7 @@ namespace wlb
                 &BaseServer::RecvHandle,
                 this,
                 boost::asio::placeholders::error,
+                boost::asio::placeholders::bytes_transferred,
                 conn));
         }
         else
@@ -132,7 +134,7 @@ namespace wlb
         if (ec)
         {
             if (ErrorHandle(ec, conn)) {
-                onDisconnected(conn);
+                Disconnected(conn);
                 return;
             }
         }
@@ -143,32 +145,18 @@ namespace wlb
     {
         m_pIOService->run();
     }
-
-    void BaseServer::onConnected(Connection_ptr conn)
+    
+    
+    void BaseServer::Disconnected(Connection_ptr conn)
     {
-        LOG(INFO) << "onConnected, connect number : " << m_vecConns.size();
-    }
-
-    void BaseServer::onDisconnected(Connection_ptr conn)
-    {
-        LOG(INFO) << "onDisconnected";
         auto iter = std::find(m_vecConns.begin(), m_vecConns.end(), conn);
         m_vecConns.erase(iter);
+        onDisconnected(conn);
     }
-
-    void BaseServer::onTime()
-    {
-        LOG(INFO) << "time out";
-    }
-
-    void BaseServer::onMessage(Connection_ptr conn, std::string Doc)
-    {
-        LOG(INFO) << "recv : " << Doc;
-    }
-
+    
     bool BaseServer::ErrorHandle(boost::system::error_code ec, Connection_ptr conn)
     {
-        LOG(ERROR) << "[BaseServer::RecvHandle] : " << ec.value() << " = "
+        LOG(ERROR) << "error value : " << ec.value() << " = "
             << ec.message();
 
         return true;
