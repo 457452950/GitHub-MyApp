@@ -6,7 +6,6 @@
 #include <iostream>
 #include <chrono>
 #include "Logger.h"
-#include <streambuf>
 
 namespace wlb
 {
@@ -87,6 +86,7 @@ namespace wlb
         accept();
         m_vecConns.push_back(conn);
 
+        conn->onConnected();
         onConnected(conn);
 
         conn->sock->async_read_some(boost::asio::buffer(conn->pBuff), boost::bind(
@@ -125,7 +125,8 @@ namespace wlb
         else
         {
             auto iter = std::find(m_vecConns.begin(), m_vecConns.end(), conn);
-            m_vecConns.erase(iter);
+            if (iter != m_vecConns.end())
+                m_vecConns.erase(iter);
         }
     }
 
@@ -150,7 +151,8 @@ namespace wlb
     void BaseServer::Disconnected(Connection_ptr conn)
     {
         auto iter = std::find(m_vecConns.begin(), m_vecConns.end(), conn);
-        m_vecConns.erase(iter);
+        if (iter != m_vecConns.end())
+            m_vecConns.erase(iter);
         onDisconnected(conn);
     }
     

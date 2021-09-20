@@ -28,6 +28,10 @@ public:
     ~BaseConnection() {
     }
     
+    void onConnected();
+    
+    BoostTCP::endpoint GetRemoteEndPoint();
+    BoostTCP::endpoint GetLocalEndPoint();
     BoostTCP::endpoint GetRemoteEndPoint(boost::system::error_code& ec);
     BoostTCP::endpoint GetLocalEndPoint(boost::system::error_code& ec);
     
