@@ -9,3 +9,8 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
+Linux/MyService/.vscode/c_cpp_properties.json
+Linux/MyService/.vscode/configurationCache.log
+Linux/MyService/.vscode/dryrun.log
+Linux/MyService/.vscode/settings.json
+Linux/MyService/.vscode/targets.log
