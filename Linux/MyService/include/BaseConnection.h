@@ -38,14 +38,18 @@ public:
     bool isKeepAlive(){
         return m_bKeepAlive;
     }
+    void setKeepAlive(bool b) { m_bKeepAlive = b; }
+    
     void CloseConnect(boost::system::error_code& ec);
     void CloseConnect();
 public:
-    socket_ptr     sock;
-    buffer_type    pBuff;
+    socket_ptr      sock;
+    buffer_type     pBuff;
 protected:
-    ioService_ptr  m_pIOService;
-    bool           m_bKeepAlive;
+    ioService_ptr   m_pIOService;
+    bool            m_bKeepAlive;
+public:
+    bool            m_bCloseAfterSend;
     
 };
 

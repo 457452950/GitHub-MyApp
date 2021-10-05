@@ -4,6 +4,8 @@
 
 #include "Logger.h"
 #include <sys/time.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 //检查文件(所有类型,包括目录和文件)是否存在
 //返回1:存在 0:不存在
@@ -91,11 +93,12 @@ namespace wlb
 
         // get head
         snprintf(head, 256,
-                 "\n++ %s %s :: %d \n|| %s: [%s] : ",
+                 "\n++ %s %s :: %d \n|| %s: %d [%s] : ",
                  _dataVal,
                  file,
                  lineNo,
                  level,
+                 gettid(),
                  _func);
 
         m_oStream << head;

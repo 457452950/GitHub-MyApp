@@ -84,60 +84,59 @@ namespace wlb
         }
 
         accept();
-        m_vecConns.push_back(conn);
-
-        conn->onConnected();
-        onConnected(conn);
-
         conn->sock->async_read_some(boost::asio::buffer(conn->pBuff), boost::bind(
-            &BaseServer::RecvHandle,
-            this,
-            boost::asio::placeholders::error,
-            boost::asio::placeholders::bytes_transferred,
-            conn));
+                &BaseServer::RecvHandle,
+                this,
+                boost::asio::placeholders::error,
+                boost::asio::placeholders::bytes_transferred,
+                conn));
+        
+        
+        m_vecConns.push_back(conn);
+        conn->onConnected();
+        
+        onConnected(conn);
+        
     }
 
     void BaseServer::RecvHandle(boost::system::error_code ec, int recvSize, Connection_ptr conn)
     {
         if (ec)
         {
+            LOG(INFO) ;
             if (ErrorHandle(ec, conn)) {
                 Disconnected(conn);
                 return;
             }
         }
-
-        std::string strBuf;
-        strBuf.assign(conn->pBuff.begin(), conn->pBuff.begin() + recvSize);
-        onMessage(conn, strBuf);
-
-        send(conn, strBuf);
-
+    
         if (conn->isKeepAlive())
         {
             conn->sock->async_read_some(boost::asio::buffer(conn->pBuff), boost::bind(
-                &BaseServer::RecvHandle,
-                this,
-                boost::asio::placeholders::error,
-                boost::asio::placeholders::bytes_transferred,
-                conn));
+                    &BaseServer::RecvHandle,
+                    this,
+                    boost::asio::placeholders::error,
+                    boost::asio::placeholders::bytes_transferred,
+                    conn));
         }
-        else
-        {
-            auto iter = std::find(m_vecConns.begin(), m_vecConns.end(), conn);
-            if (iter != m_vecConns.end())
-                m_vecConns.erase(iter);
-        }
+        
+        std::string strBuf;
+        strBuf.assign(conn->pBuff.begin(), conn->pBuff.begin() + recvSize);
+        onMessage(conn, strBuf);
     }
 
     void BaseServer::SendHandle(boost::system::error_code ec, BaseServer::Connection_ptr conn)
     {
         if (ec)
         {
-            if (ErrorHandle(ec, conn)) {
-                Disconnected(conn);
-                return;
-            }
+            LOG(INFO) ;
+            ErrorHandle(ec, conn);
+            Disconnected(conn);
+            return;
+        }
+        if (conn->m_bCloseAfterSend)
+        {
+            Disconnected(conn);
         }
     }
 
@@ -156,16 +155,25 @@ namespace wlb
         onDisconnected(conn);
     }
     
+    // return if need to close
     bool BaseServer::ErrorHandle(boost::system::error_code ec, Connection_ptr conn)
     {
-        LOG(ERROR) << "error value : " << ec.value() << " = "
+        LOG(INFO) << "error value : " << ec.value() << " = "
             << ec.message();
+        
+        if (ec.value() == 2)
+        {
+            conn->sock->shutdown(boost::asio::socket_base::shutdown_both);
+            conn->m_bCloseAfterSend = true;
+            conn->setKeepAlive(false);
+        }
 
         return true;
     }
 
     void BaseServer::send(Connection_ptr conn, std::string Doc)
     {
+        LOG(INFO) << "send : " << Doc;
         conn->sock->async_send(boost::asio::buffer(Doc), boost::bind(
             &BaseServer::SendHandle,
             this,
