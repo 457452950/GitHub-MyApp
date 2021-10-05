@@ -23,9 +23,8 @@ void Server::onConnected(Connection_ptr conn)
 void Server::onMessage(Connection_ptr conn, std::string Doc)
 {
     LOG(INFO) << conn->GetRemoteEndPoint().address().to_string() << " : " << htons(conn->GetRemoteEndPoint().port())
-    << " recv size : " << Doc.size() << " \nrecv : " << Doc;
-    // this->send(conn, Doc);
-    // conn->sock->shutdown(boost::asio::socket_base::shutdown_both);
+        << " recv size : " << Doc.size() << " \nrecv : " << Doc;
+    this->send(conn, Doc);
 }
 
 void Server::onDisconnected(Connection_ptr conn)
@@ -35,6 +34,6 @@ void Server::onDisconnected(Connection_ptr conn)
 
 void Server::onTime()
 {
-    LOG(INFO) << "time out";
+    LOG(INFO) << "time out : " << m_vecConns.size();
 }
 

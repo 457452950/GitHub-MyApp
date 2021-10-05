@@ -16,10 +16,7 @@ int main(int argc, char** argv)
 	}
 
 	wlb::Config::readFile(argv[1]);
-
-
-	// LOG(INFO) << "FrontPointAddr : " << Conf->getFrontPointAddr()
-	// 	<< " FrontPointPort : " << Conf->getFrontPointPort();
+ 
 
 	BaseServer* s = new Server(Conf->getFrontPointPort());
 
