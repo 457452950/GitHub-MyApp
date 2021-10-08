@@ -12,7 +12,7 @@ namespace wlb
         :m_pIOService(io)
     {
         sock = std::make_shared<socket_type>(*io);
-        pBuff.resize(Conf->getMaxBufferSize() * 1024);   // max 65536 64*1024
+        pBuff.resize(8 * 1024);   // max 8*1024
         m_bKeepAlive = true;
     }
 
