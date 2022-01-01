@@ -252,7 +252,7 @@ public:
     bool RawValue(const Ch* json, size_t length, Type type) { Prefix(type); return EndValue(WriteRawValue(json, length)); }
 
 protected:
-    //! Information for each nested level
+    //! L_INFOrmation for each nested level
     struct Level {
         Level(bool inArray_) : valueCount(0), inArray(inArray_) {}
         size_t valueCount;  //!< number of values in this level

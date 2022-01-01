@@ -5,10 +5,11 @@
 #include "BaseServer.h"
 #include <iostream>
 #include <chrono>
-#include "Logger.h"
+#include "utils/include/AsyncLogger.h"
 
 namespace wlb
 {
+    using namespace Log;
 
     const std::chrono::microseconds BaseServer::s_baseTick = std::chrono::microseconds(1000000 - 600);  // 1s
 
@@ -35,7 +36,7 @@ namespace wlb
         boost::system::error_code ec;
         m_pAccept->set_option(boost::asio::socket_base::reuse_address(true), ec);
         if (ec) {
-            LOG(ERROR) << "[set_option]" << ec.message();
+            LOG(L_ERROR) << "[set_option]" << ec.message();
             return;
         }
 
@@ -66,7 +67,7 @@ namespace wlb
         m_tTimer->async_wait(boost::bind(&BaseServer::TimerHandle, this, boost::asio::placeholders::error));
         if (ec)
         {
-            LOG(ERROR) << "error value : " << ec.value() << " error MSG : " << ec.message();
+            LOG(L_ERROR) << "L_ERROR value : " << ec.value() << " L_ERROR MSG : " << ec.message();
         }
         // ++m_iTick;
         int checkTime = 40 * s_secPerMil;       // 40s timer
@@ -80,7 +81,7 @@ namespace wlb
     {
         if (ec)
         {
-            LOG(ERROR) << "error value : " << ec.value() << " error MSG : " << ec.message();
+            LOG(L_ERROR) << "L_ERROR value : " << ec.value() << " L_ERROR MSG : " << ec.message();
         }
 
         accept();
@@ -103,8 +104,8 @@ namespace wlb
     {
         if (ec)
         {
-            LOG(INFO) ;
-            if (ErrorHandle(ec, conn)) {
+            LOG(L_INFO) ;
+            if (L_ERRORHandle(ec, conn)) {
                 Disconnected(conn);
                 return;
             }
@@ -129,8 +130,8 @@ namespace wlb
     {
         if (ec)
         {
-            LOG(INFO) ;
-            ErrorHandle(ec, conn);
+            LOG(L_INFO) ;
+            L_ERRORHandle(ec, conn);
             Disconnected(conn);
             return;
         }
@@ -156,9 +157,9 @@ namespace wlb
     }
     
     // return if need to close
-    bool BaseServer::ErrorHandle(boost::system::error_code ec, Connection_ptr conn)
+    bool BaseServer::L_ERRORHandle(boost::system::error_code ec, Connection_ptr conn)
     {
-        LOG(INFO) << "error value : " << ec.value() << " = "
+        LOG(L_INFO) << "L_ERROR value : " << ec.value() << " = "
             << ec.message();
         
         if (ec.value() == 2)
@@ -173,7 +174,7 @@ namespace wlb
 
     void BaseServer::send(Connection_ptr conn, std::string Doc)
     {
-        LOG(INFO) << "send : " << Doc;
+        LOG(L_INFO) << "send : " << Doc;
         conn->sock->async_send(boost::asio::buffer(Doc), boost::bind(
             &BaseServer::SendHandle,
             this,

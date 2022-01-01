@@ -55,7 +55,7 @@ namespace wlb
         void            RecvHandle(boost::system::error_code ec, int recvSize, Connection_ptr conn);
         void            SendHandle(boost::system::error_code ec, Connection_ptr conn);
 
-        bool            ErrorHandle(boost::system::error_code ec, Connection_ptr conn);
+        bool            L_ERRORHandle(boost::system::error_code ec, Connection_ptr conn);
         
         void            Disconnected(Connection_ptr conn);
 

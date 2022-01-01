@@ -3,10 +3,11 @@
 //
 
 #include "BaseConnection.h"
-#include "Logger.h"
+#include "utils/include/AsyncLogger.h"
 
 namespace wlb
 {
+    using namespace Log;
 
     BaseConnection::BaseConnection(std::shared_ptr<ioService_type> io)
         :m_pIOService(io)
@@ -57,16 +58,16 @@ void BaseConnection::onConnected()
     sock->set_option(ka, ec);
     if (ec)
     {
-        LOG(ERROR) << "error val : " << ec.value() << " : " << ec.message();
+        LOG(L_ERROR) << "L_ERROR val : " << ec.value() << " : " << ec.message();
     }
     
 /*    boost::asio::socket_base::receive_buffer_size rbs;
     sock->get_option(rbs, ec);
     if (ec)
     {
-        LOG(ERROR) << "error val : " << ec.value() << " : " << ec.message();
+        LOG(L_ERROR) << "L_ERROR val : " << ec.value() << " : " << ec.message();
     }
-    LOG(INFO) << "receive_buffer_size : " << rbs.value();*/
+    LOG(L_INFO) << "receive_buffer_size : " << rbs.value();*/
 }
 
 

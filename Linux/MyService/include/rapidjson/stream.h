@@ -63,7 +63,7 @@ concept Stream {
 \endcode
 */
 
-//! Provides additional information for stream.
+//! Provides additional L_INFOrmation for stream.
 /*!
     By using traits pattern, this type provides a default configuration for stream.
     For custom stream, this type can be specialized for other configuration.

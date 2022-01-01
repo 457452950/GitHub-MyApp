@@ -11,15 +11,20 @@ if(NOT Boost_FOUND)
 endif()
 
 
+add_subdirectory(utils)
+
 include_directories($(Boost_include_dir))
 include_directories(include)
 
 
 add_executable(MyService src/main.cpp include/BaseServer.cpp include/BaseServer.h src/Config.cpp src/Config.h
         include/JsonFileReader.cpp include/JsonFileReader.h include/BaseConnection.cpp include/BaseConnection.h
-        include/Logger.cpp include/Logger.h src/Server.cpp src/Server.h include/BaseConnectionManager.cpp include/BaseConnectionManager.h)
+        src/Server.cpp src/Server.h include/BaseConnectionManager.cpp include/BaseConnectionManager.h)
 
 
 link_directories($(Boost_library_dir))
+link_directories( ./utils/lib)
+
 target_link_libraries(MyService ${Boost_LIBRARIES})
+target_link_libraries(MyService asynclogger)
 

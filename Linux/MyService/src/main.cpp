@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-#include "Logger.h"
+#include "utils/include/AsyncLogger.h"
 #include "Config.h"
 #include "Server.h"
 
@@ -14,6 +14,8 @@ int main(int argc, char** argv)
 		std::cout << "Unknow command! \nUsage:xxx.exe [config.json]\n";
 		exit(0);
 	}
+
+	Log::Logger::Init(Log::L_DEBUG, "MyServer");
 
 	wlb::Config::readFile(argv[1]);
  
